@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>43.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>Explore your opportunities at Loras with faculty and student interaction, a tour, and a student engagement fair. Learn what it&apos;s like to be a Duhawk.</description>
+    <label>PreviewDaysLoras</label>
+</ApexPage>

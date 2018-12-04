@@ -1,0 +1,569 @@
+<apex:page standardController="Institution_Event_Registration__c" extensions="InstitutionEventRegistrationController" showHeader="false">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NM5MQKL');</script>
+    <!-- End Google Tag Manager -->
+    
+    <apex:stylesheet value="{!URLFOR($Resource.AutoComplete,'/jquery-ui.css')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.AutoComplete,'/jquery-1.12.4.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.AutoComplete,'/jquery-ui.js')}"/> 
+</head>    
+<!-- <link rel="stylesheet" href="http://sandbox.collegiseducation.com/loras/salesforce/vanilla.css"></link> -->
+<style>
+.salesforce__page-wrap {
+  overflow-x: hidden; }
+
+.salesforce__header {
+  background-color: #442D7D;
+  padding: 36px .66rem;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif; }
+  .salesforce__header img {
+    max-width: 280px; }
+
+.salesforce__form-intro {
+  margin: 20px 0 40px; }
+  @media (min-width: 768px) {
+    .salesforce__form-intro {
+      padding: 0 20px; } }
+  .salesforce__form-intro p {
+    font-size: 22px;
+    line-height: 30px;
+    max-width: 600px;
+    margin-top: 6px;
+    margin-bottom: 16px; }
+
+.salesforce__footer {
+  background-color: #19181a;
+  bottom: 0;
+  color: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 28px .9rem;
+  text-align: center;
+  font-size: 13px !important; }
+  @media (min-width: 768px) {
+    .salesforce__footer {
+      margin: 0 auto;
+      width: 100%;
+      right: 0; } }
+  .salesforce__footer a {
+    color: #ffffff; }
+
+.salesforce-form--vanilla {
+  margin: 0 auto 20px;
+  padding: 36px .66rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  color: #535353; }
+  @media (min-width: 768px) {
+    .salesforce-form--vanilla {
+      padding: 48px 12%; } }
+  @media (min-width: 1024px) {
+    .salesforce-form--vanilla {
+      padding: 48px 20%; } }
+  .salesforce-form--vanilla::after {
+    content: "";
+    display: table;
+    clear: both; }
+  .salesforce-form--vanilla h1 {
+    font-size: 24px;
+    color: #442D7D; }
+    @media (min-width: 768px) {
+      .salesforce-form--vanilla h1 {
+        font-size: 36px; } }
+  .salesforce-form--vanilla p {
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 16px; }
+  .salesforce-form--vanilla fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0; }
+  .salesforce-form--vanilla legend {
+    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 6px;
+    margin-bottom: 2em;
+    display: block;
+    border-bottom: 1px solid #cacaca; }
+  .salesforce-form--vanilla label {
+    display: block;
+    margin-bottom: 5px; }
+  .salesforce-form--vanilla input[type="text"], .salesforce-form--vanilla select {
+    position: relative;
+    width: 100%;
+    padding: 14px 8px;
+    margin-bottom: 20px;
+    border: 1px solid #cacaca;
+    border-radius: 0;
+    font-size: 16px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+         appearance: none;
+    background-color: #ffffff;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
+  .salesforce-form--vanilla .salesforce-form__select-wrap {
+    position: relative; }
+    .salesforce-form--vanilla .salesforce-form__select-wrap::after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 8px 6px 0 6px;
+      border-color: #19181a transparent transparent transparent;
+      top: 20px;
+      right: 10px; }
+  .salesforce-form--vanilla textarea {
+    resize: none;
+    width: 100%;
+    height: 72px;
+    margin-bottom: 20px; }
+    @media (min-width: 768px) {
+      .salesforce-form--vanilla textarea {
+        width: 94%; } }
+  .salesforce-form--vanilla input[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    background: none;
+    background-color: #d0b78a;
+    color: #442D7D;
+    font-size: 16px;
+    border-radius: 0;
+    border: 2px solid #d0b78a;
+    -webkit-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out; }
+    @media (min-width: 768px) {
+      .salesforce-form--vanilla input[type="submit"] {
+        margin-top: 28px; } }
+    .salesforce-form--vanilla input[type="submit"]:hover {
+      background-color: rgba(30, 30, 30, 0.5);
+      color: #ffffff;
+      border: 2px solid #ffffff; }
+  .salesforce-form--vanilla .lookupInput {
+    position: relative; }
+  .salesforce-form--vanilla .lookupInput a {
+    position: absolute;
+    right: 10px;
+    top: -3px; }
+  .salesforce-form--vanilla .salesforce-form__disclaimer {
+    margin-top: 16px;
+    font-size: 12px !important;
+    text-align: center;
+    line-height: 18px; }
+    @media (min-width: 768px) {
+      .salesforce-form--vanilla .salesforce-form__disclaimer {
+        text-align: left; } }
+    .salesforce-form--vanilla .salesforce-form__disclaimer p {
+      font-size: 12px !important;
+      padding: 0;
+      line-height: 18px; }
+  .salesforce-form--vanilla .errorMsg {
+    margin: -12px 0 12px 0;
+    font-size: 14px;
+    color: tomato; }
+
+.salesforce-form--full-width {
+  margin-bottom: 18px; }
+  @media (min-width: 768px) {
+    .salesforce-form--full-width {
+      padding: 20px;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box; } }
+
+.salesforce-form__row:after {
+  content: "";
+  display: table;
+  clear: both; }
+
+.salesforce-form__column--inner {
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 18px; }
+  @media (min-width: 768px) {
+    .salesforce-form__column--inner {
+      width: 50%;
+      float: left;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box; } }
+  @media (min-width: 768px) {
+    .salesforce-form__column--inner:first-child {
+      padding-right: 1em; } }
+
+.salesforce-form__column {
+  width: 100%;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 18px; }
+  @media (min-width: 768px) {
+    .salesforce-form__column {
+      width: 50%;
+      float: left;
+      padding: 20px;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box; }
+      .salesforce-form__column:nth-child(3n) {
+        width: 49.15254%;
+        float: right;
+        margin-right: 0; } }
+  .salesforce-form__column:nth-child(3n) {
+    margin-top: 18px; }
+    @media (min-width: 768px) {
+      .salesforce-form__column:nth-child(3n) {
+        border-top: 0;
+        padding-top: 0; } }
+    
+	.ui-autocomplete.ui-widget {
+  		font-size: 16px;
+	}
+
+</style>
+      
+<script>
+    $(function() {
+        
+        //$(document).ready(function(){
+        //  $('[id$=highSchoolSearch]').change(function(){
+        //      alert('hi');
+        //  });
+        //  return false;
+        //});
+        
+        // for the high school smart search
+        $('[id$=highSchoolSearch]').autocomplete({
+            minLength: 3, // number of characters entered before search
+            
+            source: function(request, response) { // sets the source 
+                
+                var searchString = request.term;
+                
+                InstitutionEventRegistrationController.getSearchSuggestions(searchString, function(result,event) {
+                    
+                    if (event.status) {
+                        if (typeof result == 'undefined' || result.length <= 0) {
+                            //alert(result);
+                            // no matches were found
+                            //reponse(null);
+                            response(['No High Schools Found']);
+                        } 
+                        else {
+                            response(result.slice(0, 10));
+                        }
+                    }
+                    else {
+                        //alert('2');
+                        // no response from the server
+                        response(['No High Schools Found']);
+                    }
+                }, {escape: false});                                           
+            }, // source end 
+            
+            select: function(event, ui) { // on selecting a result
+                if (ui.item.label != null) {
+                    $('[id$=highSchoolSearch]').val(ui.item.selectedLabel);
+                    $('[id$=highSchoolId]').val(ui.item.value);
+                    if ($('[id$=highSchoolTextErrorMessage]').val != null) {
+                    	DeleteError('');
+                    	$('[id$=highSchoolTextErrorMessage]').hide();
+                    	//$('[id$=highSchoolTextErrorMessage]').css('color', 'white');
+                    }
+                } 
+                else {
+                    $('[id$=highSchoolId]').val('');
+                }
+                return false;
+            }, // select end
+            
+            focus: function(event, ui) { // may not be needed
+                /*if (ui.item.selectedLabel != null) {
+                    $('[id$=highSchoolSearch]').val(ui.item.selectedLabel);
+                    $('[id$=highSchoolId]').val(ui.item.value);
+                }
+                else {
+                    $('[id$=highSchoolId]').val('');
+                }
+                return false; */
+            }, // focus end
+        });
+    });    
+</script>
+    
+<div class="salesforce__page-wrap">
+    <div class="salesforce__header">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWgAAABCCAYAAAB6pUwxAAAACXBIWXMAAAsTAAALEwEAmpwYAAAGb2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDAgNzkuMTYwNDUxLCAyMDE3LzA1LzA2LTAxOjA4OjIxICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtbG5zOnN0RXZ0PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VFdmVudCMiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIiB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0idXVpZDpGNzA2MzkwNzNGRjYxMUUwQUIzMDgyRTFGQjI4MUUyOSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpDQjY3OEU0MkE0ODQxMUU4OTNDNkEzQUNFRUE0MEY3NSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpkZDc0NjhiNi0xYjBmLTQxMjktYmNmNi1iZmNhMGM5YTg0MTEiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKE1hY2ludG9zaCkiIHhtcDpDcmVhdGVEYXRlPSIyMDE4LTA5LTExVDEyOjA1OjI4LTA1OjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAxOC0wOS0xMVQxMjozNDowOC0wNTowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAxOC0wOS0xMVQxMjozNDowOC0wNTowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjJhMzRiZTNlLTIwNzktNDIxMi1hMzFmLTZmYjEzZTE4MWQ2MCIgc3RSZWY6ZG9jdW1lbnRJRD0iYWRvYmU6ZG9jaWQ6cGhvdG9zaG9wOmE4MjEwOWQ3LWI0MjMtMTE3YS1iMjBlLWUyNzE5ZjgzNGYzNiIvPiA8eG1wTU06SGlzdG9yeT4gPHJkZjpTZXE+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDpkZDc0NjhiNi0xYjBmLTQxMjktYmNmNi1iZmNhMGM5YTg0MTEiIHN0RXZ0OndoZW49IjIwMTgtMDktMTFUMTI6MzQ6MDgtMDU6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE4IChNYWNpbnRvc2gpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDwvcmRmOlNlcT4gPC94bXBNTTpIaXN0b3J5PiA8ZGM6dGl0bGU+IDxyZGY6QWx0PiA8cmRmOmxpIHhtbDpsYW5nPSJ4LWRlZmF1bHQiPkxvcmFzTG9nb1JhUmFnb2xkLjRDQmxkPC9yZGY6bGk+IDwvcmRmOkFsdD4gPC9kYzp0aXRsZT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6dqgBiAAAmj0lEQVR4nO2dd5wV1fnGv3d32aWIdERQQBFsWDCKNYAl0YgtWBBjjcZYYiUxGjESC2rMz94xdqNYIoZI1FhjVIwldgU1dgQkSl/Zdn9/POc4M+fO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" alt=""></img>
+    </div>
+    <div class="salesforce-form--vanilla">
+        <div class="salesforce__form-intro">
+            <h1>Learn what it’s like to be a Duhawk at Preview Day</h1>
+            <p>Explore your opportunities at Loras with faculty and student interaction, a tour, and a student engagement fair.</p>
+        </div>    
+        <apex:form >
+            
+            <!--clears the smart search error message when a new high school is selected-->
+            <apex:actionFunction action="{!highSchoolIdAF}" name="DeleteError" reRender="none">
+                <apex:param name="myParam" value="" assignTo="{!highSchoolTextErrorMessage}"/>
+            </apex:actionFunction>
+
+             <!-- Google Tag Manager (noscript) DO NOT REMOVE  -->
+            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NM5MQKL"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+            <!-- End Google Tag Manager (noscript) -->
+            
+            <input type ="hidden" value="{!Institution_Event_Registration__c.ga_source__c}" id="ga_source" />
+            <input type ="hidden" value="{!Institution_Event_Registration__c.ga_medium__c}" id="ga_medium"/>
+            <input type ="hidden" value="{!Institution_Event_Registration__c.ga_term__c}" id="ga_term"/>
+            <input type ="hidden" value="{!Institution_Event_Registration__c.ga_content__c}" id="ga_content"/>
+            <input type ="hidden" value="{!Institution_Event_Registration__c.ga_campaign__c}" id="ga_campaign"/>
+            <input type ="hidden" value="{!Institution_Event_Registration__c.ga_gclid__c}" id="ga_clientId"/>
+            <input type ="hidden" value="{!Institution_Event_Registration__c.ga_source__c}" id="ga_gclid"/> 
+        <div class="salesforce-form--full-width">
+            <apex:outputPanel >
+            <fieldset>
+                <legend>Personal Information</legend>
+                <div class="salesforce-form__row">
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id4">First Name:*</label>
+                            <apex:inputField value="{!Institution_Event_Registration__c.First_Name__c}" required="true" />
+                        </div>  
+                    </div>
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id6">Last Name:*</label>
+                            <apex:inputField value="{!Institution_Event_Registration__c.Last_Name__c}" required="true" />
+                        </div>  
+                    </div>
+                </div>
+                <div class="salesforce-form__row">
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id8">Email*</label>
+                            <apex:inputField value="{!Institution_Event_Registration__c.Email__c}"  required="true" />
+                        </div>                  
+                    </div>
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id10">Email owner</label>
+                            <div class="salesforce-form__select-wrap">
+                                <apex:inputField value="{!Institution_Event_Registration__c.Email_Belong_to_Student_or_Parent__c}" />
+                            </div>
+                        </div>                  
+                    </div> 
+                </div> 
+                <div class="salesforce-form__row">
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id12">Phone:*</label>
+                                <apex:inputField value="{!Institution_Event_Registration__c.Cell_Phone__c}" required="true" />
+                        </div>   
+                    </div>
+                </div>
+                <div class="salesforce-form__row">
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id14">Home Address 1:*</label>
+                                <apex:inputField value="{!Institution_Event_Registration__c.Street_Address_1__c}" required="true" />
+                        </div>                         
+                    </div>
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id16">Home Address 2:</label>
+                                <apex:inputField value="{!Institution_Event_Registration__c.Street_Address_2__c}" />
+                        </div>                         
+                    </div>                    
+                </div>
+                <div class="salesforce-form__row">
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id18">City:*</label>
+                                <apex:inputField value="{!Institution_Event_Registration__c.City__c}" required="true" />
+                        </div>                         
+                    </div>
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id20">State:*</label>
+                                <div class="salesforce-form__select-wrap">
+                                    <apex:inputField value="{!Institution_Event_Registration__c.State__c}" required="true" />
+                                </div>
+                        </div>                         
+                    </div>                    
+                </div>
+                <div class="salesforce-form__row">
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id22">ZIP:*</label>
+                                <apex:inputField value="{!Institution_Event_Registration__c.Postal_Code__c}" required="true" />
+                        </div>   
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Schooling Information</legend>               
+                <div class="salesforce-form__row">
+                    <p>Please use the Search option below. You can search by high school name. Your results will include the name and location of high schools found. If you don’t find your High School listed please enter Unlisted High School into the search. If you were Home schooled, please enter Unlisted Home Schooled into the search. For unlisted high schools you can enter additional information into the text box beneath the search.</p>                     
+                    <div class="salesforce-form__field-wrap">
+                        <label for="j_id0:j_id2:j_id24">High School:</label>
+                      		<apex:inputText value="{!highSchoolInput}" id="highSchoolSearch"/>
+                            <apex:outputText value="{!highSchoolTextErrorMessage}" rendered="{!highSchoolTextErrorMessage != null}"  id="highSchoolTextErrorMessage" styleClass="errorMsg" escape="false"/>
+                            <apex:inputHidden value="{!Institution_Event_Registration__c.High_School__c}" id="highSchoolId"/>
+                    </div>
+                </div>
+                <div class="salesforce-form__row">
+                    <p>If you cannot find your high school, please enter the school name and address below. Otherwise, leave this area blank.</p>  
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id26">Unlisted School Name and Address</label>
+                                <apex:inputField value="{!Institution_Event_Registration__c.Unlisted_Home_School_Information__c }" />
+                        </div>
+                    </div>
+                </div>   
+                <div class="salesforce-form__row">
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id28">High School Graduation Year:*</label>
+                            <div class="salesforce-form__select-wrap">
+                                <apex:inputField value="{!Institution_Event_Registration__c.High_School_Graduation_Year__c}" required="true" />
+                            </div>                
+                        </div>
+                    </div>                    
+                </div>
+                             
+            </fieldset>
+
+            <fieldset>
+                <legend>Personalize Your Visit</legend>       
+                <div class="salesforce-form__row">
+                    <div class="salesforce-form__field-wrap">
+                        <p>We recommend a tour of our campus if you have not done so already. Do you wish to have a tour of campus during your visit?</p>
+                        <label for="j_id0:j_id2:j_id30">Tour:</label>
+                        <div class="salesforce-form__select-wrap">
+                            <apex:inputField value="{!Institution_Event_Registration__c.Wish_to_have_a_Tour__c}" />
+                        </div>                
+                    </div>
+                </div>
+                <div class="salesforce-form__row">
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id32">Select Your Visit Date and Time:*</label>
+                          	<apex:inputField value="{!thisRequest.Institution_Event__c}" id="time" />
+                        </div>
+                    </div>      
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id34">Appointment Requests/Scheduling:</label>
+                            <div class="salesforce-form__select-wrap">
+                                <apex:inputField value="{!Institution_Event_Registration__c.Wish_to_have_a_Tour__c}" />
+                            </div>                
+                        </div>
+                    </div>
+                </div>  
+
+                <div class="salesforce-form__row">
+                    <p>Please select 3 areas of interest that you wish to learn more about during your visit to campus. (One is required, 3 are the max).</p>
+                </div>
+
+                <div class="salesforce-form__row">
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id36">Interest #1:*</label>
+                            <div class="salesforce-form__select-wrap">
+                                <apex:inputField value="{!Institution_Event_Registration__c.Appointment_1__c}" required="true" />
+                            </div>                
+                        </div>
+                    </div>
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id38">Interest #1 Detail:*</label>
+                            <div class="salesforce-form__select-wrap">
+                                <apex:inputField value="{!Institution_Event_Registration__c.Appointment_1_Detail__c}" required="true" />
+                            </div>                
+                        </div>
+                    </div>                    
+                </div>
+                <div class="salesforce-form__row">
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id40">Interest #2:*</label>
+                            <div class="salesforce-form__select-wrap">
+                                <apex:inputField value="{!Institution_Event_Registration__c.Appointment_2__c}" />
+                            </div>                
+                        </div>
+                    </div>
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id42">Interest #2 Detail:*</label>
+                            <div class="salesforce-form__select-wrap">
+                                <apex:inputField value="{!Institution_Event_Registration__c.Appointment_2_Detail__c}" />
+                            </div>                
+                        </div>
+                    </div>                    
+                </div>
+                <div class="salesforce-form__row">
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id44">Interest #3:*</label>
+                            <div class="salesforce-form__select-wrap">
+                                <apex:inputField value="{!Institution_Event_Registration__c.Appointment_3__c}" />
+                            </div>                
+                        </div>
+                    </div>
+                    <div class="salesforce-form__column--inner">
+                        <div class="salesforce-form__field-wrap">
+                            <label for="j_id0:j_id2:j_id46">Interest #3 Detail:*</label>
+                            <div class="salesforce-form__select-wrap">
+                                <apex:inputField value="{!Institution_Event_Registration__c.Appointment_3_Detail__c}" />
+                            </div>                
+                        </div>
+                    </div>                    
+                </div>                
+            </fieldset>
+            <fieldset>
+                <legend>Alumni Details</legend>       
+                <div class="salesforce-form__row">
+                    <label for="j_id0:j_id2:j_id48">Do you have a family member that has graduated from Loras College?</label>
+                      <apex:actionRegion >
+                    	<div class="salesforce-form__select-wrap">
+                        <apex:inputField value="{!Institution_Event_Registration__c.Family_Member_Graduated_from_Loras__c}" >
+                       		<apex:actionSupport event="onchange" status="counterStatus" reRender="nameofalumn"/>
+                         </apex:inputField>
+                    	</div>
+                     </apex:actionRegion>            
+                </div>
+                <apex:outputPanel id="nameofalumn">             
+                <apex:outputPanel rendered="{!Institution_Event_Registration__c.Family_Member_Graduated_from_Loras__c == 'Yes'}">                  
+                <div class="salesforce-form__row">
+                    <label for="j_id0:j_id2:j_id50">Name of alumus/alumna and relationship to you:</label>
+                    <apex:inputField value="{!Institution_Event_Registration__c.Name_of_Alumus_Alumna_and_Relationship__c}" />
+                </div>
+                </apex:outputPanel> 
+                </apex:outputPanel>                
+            </fieldset>
+            <fieldset>
+                <div class="salesforce-form__row">
+                    <apex:commandButton value="Submit" action="{!SavePage}"/>        
+                </div>
+            </fieldset>
+          </apex:outputPanel>
+        </div>
+        </apex:form>
+    </div>
+    <div class="salesforce__footer-wrap">
+        <div class="salesforce__footer">
+            <p>Loras College | 1450 Alta Vista Street | Dubuque, IA 52001</p>
+            <p>Copyright © Loras College, All rights reserved | <a rel="noopener noreferrer" href="http://www.loras.edu/consumer-information/" target="_blank">View our privacy policy</a> | Call us: 800.245.6727 or 563.588.7100</p>
+        </div>
+    </div>
+</div>
+</apex:page>
