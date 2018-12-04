@@ -3,6 +3,7 @@
     <types>
         <members>InstitutionEventRegistrationController</members>
         <members>InstitutionEventRegistrContrTest</members>
+        <members>LorasLeadRouterTest</members>
         <name>ApexClass</name>
     </types>
     <types>
